@@ -1,7 +1,14 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
-const PostModel = require('./models/Posts')
+const PostModel = require('./models/Posts');
+
+
+app.use(cors());
+//middleware to receive JSON data
+app.use(express.json());
+
 
 //DATABASE CONNECTION
 mongoose.connect(
@@ -11,8 +18,11 @@ mongoose.connect(
      }
 );
 
-app.get('/insert', async (req, res) => {
-    const post = new PostModel({name: "Mario", postDescription: "I love you"});
+app.post('/addPost', async (req, res) => {
+    const name = req.body.name;
+    const description = req.body.description;
+
+    const post = new PostModel({name: name, postDescription: description});
     await post.save()
     res.send("Inserted Data")
 }), 
