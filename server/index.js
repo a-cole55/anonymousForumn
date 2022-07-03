@@ -22,8 +22,9 @@ app.post('/addPost', async (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const title = req.body.title;
+    const date= req.body.date;
 
-    const post = new PostModel({name: name, title: title, postDescription: description});
+    const post = new PostModel({name: name, title: title, postDescription: description, fullDate:date});
     await post.save()
     res.send("Inserted Data")
 }), 
